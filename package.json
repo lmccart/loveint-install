@@ -1,0 +1,15 @@
+{
+  "name": "loveint-installation",
+  "version": "1.0.0",
+  "description": "installation of loveint performance",
+  "main": "server.js",
+  "author": "lmccart",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "fs-extra": "^0.26.7",
+    "mongodb": "^2.1.16",
+    "mp4duration": "0.0.4",
+    "mp4js": "0.0.2"
+  }
+}
