@@ -24,4 +24,6 @@ done
 ```
 
 replace all space with underscore
-`for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done`
+```
+for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done
+```

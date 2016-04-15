@@ -51,6 +51,7 @@ function resetDb() {
           files.forEach(function(f) {
             if (f.indexOf('.mp4') !== -1) { // || f.indexOf('.mov') !== -1) {
               mp4duration.parse(path+'/'+f, function(err, tags) {
+                if (err) console.log(err)
                 console.log(tags);
               });
             }
