@@ -1,5 +1,5 @@
-
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -8,7 +8,7 @@ var fs = require('fs-extra');
 // Connection URL
 var url = 'mongodb://localhost:27017/myproject';
 var database, clips;
-var footage_root = __dirname +'/footage/';
+var footage_root = __dirname +'/public/footage/';
 var beginOff = new Date('2014 June 26 00:00:00').getTime();
 
 // Use connect method to connect to the Server
@@ -21,9 +21,7 @@ MongoClient.connect(url, function(err, db) {
 
 
 
-app.get('/', function(req, res){
-  res.sendfile('public/index.html');
-});
+app.use(express.static('public'));
 
 app.get('/reset_db', function(req, res) {
   resetDb();
@@ -72,7 +70,7 @@ function addClip(folder, file) {
   var endoff = startoff + duration;
   console.log(startoff, duration, endoff);
   var c = {
-    path: footage_root+folder+'/'+file,
+    path: '/footage/'+folder+'/'+file,
     type: type,
     person: person,
     startoff: startoff,
