@@ -19,7 +19,7 @@ $(document).ready(function() {
     $.getJSON('/get_clips?off='+off, function(data) {
       console.log(off)
       data.forEach(function(clip) {       
-        if (person === data[i].person) {
+        if (person === clip.person) {
           var elt = $('#'+clip.type);
           if (elt.attr('src') !== clip.path) {
             var skip = off - clip.startoff;
