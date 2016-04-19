@@ -4,31 +4,37 @@
 <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
 <script>
 var startoff = new Date('2016 April 18 0:00:00').getTime();
-var off = new Date().getTime() - startoff;
+var off;
+var timeouts = { watching: false, watched: false };
 
 $(document).ready(function() {
 
   var person = window.location.search.substring(3);
   $(document).prop('title', person);
 
-  $('video').on('ended',function(){
-    $(this).css('opacity', 0);
-  });
-
   setInterval(updateClips, 1000);
+
   function updateClips() {
-    //off = new Date().getTime() - startoff;
+    off = new Date().getTime() - startoff;
     $.getJSON('/get_clips?off='+off, function(data) {
-      console.log(data)
-      for (var i=0; i<data.length; i++) {        
+      console.log(off)
+      data.forEach(function(clip) {       
         if (person === data[i].person) {
-          var elt = $('#'+data[i].type);
-          if (elt.attr('src') !== data[i].path) {
+          var elt = $('#'+clip.type);
+          if (elt.attr('src') !== clip.path) {
+            var skip = off - clip.startoff;
+            var rest = clip.duration - skip;
+            if (timeouts[clip.type]) clearTimeout(timeouts[clip.type]);
+            timeouts[clip.type] = setTimeout(function() {
+              elt.css('opacity', 0);
+            }, rest);
+
             elt.css('opacity', 1);
-            elt.attr('src', data[i].path);
+            elt.attr('src', clip.path);
+            elt.currentTime = Math.floor(skip / 1000);
           }
         }
-      }
+      });
     });
   }
 });
@@ -38,6 +44,7 @@ $(document).ready(function() {
 body {
   margin: 0;
   padding: 0;
+  background: black;
 }
 video {
   width: 50%;
