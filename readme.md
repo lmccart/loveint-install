@@ -18,23 +18,23 @@
 ### Data structure
 ```
 {
-_id: "57155ae66d05a52d7d6d0794",
-path: "/footage/watching_lauren/2014-June-27_16_36_8_+85.mov",
-type: "watching",
-person: "lauren",
-startoff: 146168000,
-endoff: 146253000,
-duration: 85000
+  _id: "57155ae66d05a52d7d6d0794",
+  path: "/footage/watching_lauren/2014-June-27_16_36_8_+85.mov",
+  type: "watching",
+  person: "lauren",
+  startoff: 146168000,
+  endoff: 146253000,
+  duration: 85000
 }
 
 {
-_id: "57155ae66d05a52d7d6d05dd",
-path: "/footage/watched_kyle/2014-June-27_16_36_8_+85.mp4",
-type: "watched",
-person: "kyle",
-startoff: 146168000,
-endoff: 146253000,
-duration: 85000
+  _id: "57155ae66d05a52d7d6d05dd",
+  path: "/footage/watched_kyle/2014-June-27_16_36_8_+85.mp4",
+  type: "watched",
+  person: "kyle",
+  startoff: 146168000,
+  endoff: 146253000,
+  duration: 85000
 }
 ```
 
