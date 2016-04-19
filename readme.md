@@ -4,18 +4,18 @@
 2. Install nodejs.
 3. Install npm modules: `npm install`
 
-### Running
+### running
 
 1. Run mongo: `mongo`. If this doesn't work, first try: `brew services start mongodb` 
 2. Run server: `node server.js`.
 3. Go to `http://localhost:3000/?q=kyle` or `http://localhost:3000/?q=lauren`.
 
-### Endpoints
+### endpoints
 * `/?q=kyle, /?q=lauren` - installation projection
 * `/get_clips?off=N` - N is milliseconds since start
 * `/reset_db` - just what you'd guess
 
-### Data structure
+### data structure
 ```
 {
   _id: "57155ae66d05a52d7d6d0794",
