@@ -3,6 +3,7 @@
 1. Install mongodb: `brew install mongodb`
 2. Install nodejs.
 3. Install npm modules: `npm install`
+4. Install forever: `sudo npm install forever -g`
 
 ### running
 
@@ -57,4 +58,19 @@ done
 replace all space with underscore
 ```
 for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done
+```
+
+
+### launchd hints
+
+```
+launchctl load ~/Library/LaunchAgents/com.tabalive.plist
+launchctl load ~/Library/LaunchAgents/org.mongodb.mongod.plist
+launchctl unload ~/Library/LaunchAgents/com.tabalive.plist
+launchctl unload ~/Library/LaunchAgents/org.mongodb.mongod.plist
+launchctl start com.tabalive.plist
+launchctl start org.mongodb.plist
+launchctl stop com.tabalive.plist
+launchctl stop org.mongodb.plist
+launchctl list
 ```
