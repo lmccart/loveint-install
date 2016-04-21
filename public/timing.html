@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/addons/p5.dom.min.js"></script>
+<script>
+var barHeight = 32;
+var days = .4; // days of footage to display
+var timing;
+function preload() {
+  timing = loadJSON('/get_timing');
+}
+function setup() {
+  createCanvas(displayWidth, barHeight * 2);
+  noLoop();
+}
+function draw() {
+  background(255);
+  var scale = width / (days * 24 * 60 * 60 * 1000);
+  noStroke();
+  timing.forEach(function (clip) {
+    var verticalOffset = 0;
+    fill(0, 0, 255);
+    if(clip.person == 'lauren') {
+      verticalOffset = barHeight;
+      fill(255, 0, 0);
+    }
+    rect(clip.startoff * scale, verticalOffset,
+      (clip.endoff - clip.startoff) * scale, barHeight);
+  })
+}
+</script>
+</head>
+<body>
+</body>
+</html>

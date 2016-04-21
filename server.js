@@ -45,6 +45,25 @@ app.get('/get_sorted', function(req, res) {
   });
 });
 
+app.get('/get_timing', function(req, res) {
+  clips.find({}).toArray(function(err, data) {
+    data.sort(function (a, b) {
+      return a.startoff < b.startoff ? -1 : +1;
+    })
+    data = data.filter(function (item) {
+      return item.type == 'watching';
+    })
+    data = data.map(function (item) {
+      return {
+        person: item.person,
+        startoff: item.startoff,
+        endoff: item.endoff
+      }
+    })
+    res.json(data);
+  });
+})
+
 http.listen(3000, function(){
   console.log('listening on port 3000');
 });
