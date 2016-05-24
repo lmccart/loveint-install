@@ -45,6 +45,16 @@ app.get('/get_sorted', function(req, res) {
   });
 });
 
+app.get('/get_stats', function(req, res) {
+  var last = 0;
+  clips.find({}).toArray(function(err, data) {
+    data.forEach(function (item) {
+      last = Math.max(last, item.endoff);
+    });
+    res.json({total_time: last});
+  });
+});
+
 app.get('/get_timing', function(req, res) {
   clips.find({}).toArray(function(err, data) {
     data.sort(function (a, b) {

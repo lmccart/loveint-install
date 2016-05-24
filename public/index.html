@@ -3,9 +3,13 @@
 <head>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
 <script>
-var startoff = new Date().getTime();
+var startoff = new Date('2016 May 18 00:00:00').getTime();
 var off;
 var timeouts = { watching: false, watched: false };
+
+$.getJSON('/get_stats', function(data) {
+  totalTime = data.total_time;
+});
 
 $(document).ready(function() {
 
@@ -16,6 +20,10 @@ $(document).ready(function() {
 
   function updateClips() {
     off = new Date().getTime() - startoff;
+    while (off > totalTime) {
+      off -= totalTime;
+    }
+
     $.getJSON('/get_clips?off='+off, function(data) {
       console.log(off)
       data.forEach(function(clip) {       

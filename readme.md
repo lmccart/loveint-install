@@ -8,7 +8,7 @@
 ### running
 
 1. Run mongo: `mongo`. If this doesn't work, first try: `brew services start mongodb` 
-2. Run server: `node server.js`.
+2. Run server: `node server.js` or `forever start server.js`.
 3. Go to `http://localhost:3000/?q=kyle` or `http://localhost:3000/?q=lauren`.
 
 ### endpoints
