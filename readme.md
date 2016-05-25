@@ -1,15 +1,16 @@
 ### installation
 
 1. Install mongodb: `brew install mongodb`
-2. Install nodejs.
-3. Install npm modules: `npm install`
-4. Install forever: `sudo npm install forever -g`
+2. Run mongo `mongo`, and reset db: go to `http://localhost:3002/reset_db'
+3. Install nodejs.
+4. Install npm modules: `npm install`
+5. Install forever: `sudo npm install forever -g`
 
 ### running
 
 1. Run mongo: `mongo`. If this doesn't work, first try: `brew services start mongodb` 
 2. Run server: `node server.js` or `forever start server.js`.
-3. Go to `http://localhost:3000/?q=kyle` or `http://localhost:3000/?q=lauren`.
+3. Go to `http://localhost:3002/?q=kyle` or `http://localhost:3002/?q=lauren`.
 
 ### endpoints
 * `/?q=kyle, /?q=lauren` - installation projection

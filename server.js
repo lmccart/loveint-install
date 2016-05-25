@@ -6,7 +6,7 @@ var assert = require('assert');
 var fs = require('fs-extra');
 
 // Connection URL
-var url = 'mongodb://localhost:27017/myproject';
+var url = 'mongodb://localhost:27017/loveint';
 var database, clips;
 var footage_root = __dirname +'/public/footage/';
 var beginOff = new Date('2014 June 26 00:00:00').getTime();
@@ -79,6 +79,7 @@ http.listen(3002, function(){
 });
 
 function resetDb() {
+  console.log('reseting db based on '+footage_root);
   database.dropCollection('clips', function(err) {
     var folders = fs.readdirSync(footage_root);
     var data = buildClips(folders);
