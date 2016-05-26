@@ -25,7 +25,7 @@ $(document).ready(function() {
     }
 
     $.getJSON('/get_clips?off='+off, function(data) {
-      console.log(off)
+      console.log(data)
       data.forEach(function(clip) {       
         if (person === clip.person) {
           var elt = $('#'+clip.type);
@@ -34,10 +34,10 @@ $(document).ready(function() {
             var rest = clip.duration - skip;
             if (timeouts[clip.type]) clearTimeout(timeouts[clip.type]);
             timeouts[clip.type] = setTimeout(function() {
-              elt.css('opacity', 0);
+              elt.hide();
             }, rest);
 
-            elt.css('opacity', 1);
+            elt.show();
             elt.attr('src', clip.path);
             elt.currentTime = Math.floor(skip / 1000);
           }
@@ -55,7 +55,7 @@ body {
   background: black;
 }
 video {
-  width: 50%;
+  width: 100%;
   float: left;
 }
 </style>
