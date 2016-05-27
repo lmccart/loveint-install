@@ -3,8 +3,9 @@
 <head>
 <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
 <script>
-var startoff = new Date('2016 May 18 00:00:00').getTime();
-var off;
+var startoff = new Date('2016 May 26 00:00:00').getTime();
+var off = 0;
+var totalTime;
 var timeouts = { watching: false, watched: false };
 
 $.getJSON('/get_stats', function(data) {
@@ -26,7 +27,7 @@ $(document).ready(function() {
 
     $.getJSON('/get_clips?off='+off, function(data) {
       console.log(data)
-      data.forEach(function(clip) {       
+      data.forEach(function(clip) {
         if (person === clip.person) {
           var elt = $('#'+clip.type);
           if (elt.attr('src') !== clip.path) {
@@ -56,14 +57,22 @@ body {
 }
 video {
   width: 100%;
-  float: left;
   display: none;
+}
+.container {
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 </head>
 
 <body>
-<video id='watching' autoplay></video>
-<video id='watched' autoplay></video>
+<div class='container'>
+  <video id='watching' autoplay></video>
+  <video id='watched' autoplay></video>
+</div>
 </body>
 </html>

@@ -25,12 +25,12 @@ app.use(express.static('public'));
 
 app.get('/reset_db', function(req, res) {
   resetDb();
-  res.json({success: true});
+  res.sendStatus(200);
 });
 
 app.get('/get_clips', function(req, res) {
   var off = parseInt(req.query.off);
-  var query = { startoff : { $lte: off }, endoff : { $gt : off }};
+  var query = {startoff : { $lte: off }, endoff : { $gt : off }};
   clips.find(query).toArray(function(err, data) {
     res.json(data);
   });
@@ -57,19 +57,12 @@ app.get('/get_stats', function(req, res) {
 
 app.get('/get_timing', function(req, res) {
   clips.find({}).toArray(function(err, data) {
-    data.sort(function (a, b) {
-      return a.startoff < b.startoff ? -1 : +1;
-    })
-    data = data.filter(function (item) {
-      return item.type == 'watching';
-    })
-    data = data.map(function (item) {
-      return {
-        person: item.person,
-        startoff: item.startoff,
-        endoff: item.endoff
-      }
-    })
+    // data.sort(function (a, b) {
+    //   return a.startoff < b.startoff ? -1 : +1;
+    // })
+    // data = data.filter(function (item) {
+    //   return item.type == 'watching';
+    // })
     res.json(data);
   });
 })
@@ -143,7 +136,7 @@ function collapseEmptySpace(data, inbetweenTime) {
   data.sort(function (a, b) {
       return a.startoff < b.startoff ? -1 : +1;
   })
-  data.forEach(function (item) {
+  return data.map(function (item) {
     // if the current start time
     // happens after the previousEndoff
     if (item.startoff > previousEndoff) {
@@ -155,14 +148,17 @@ function collapseEmptySpace(data, inbetweenTime) {
         timeOffset += inbetweenTime;
       }
     }
-    // keep track of the most recent endoff
-    // (do this before modifying the endoff)
-    previousEndoff = item.endoff;
+    // if the current endoff happens after the previous endoff
+    if(item.endoff > previousEndoff) {
+      // then update the previous endoff
+      // (do this before modifying the endoff)
+      previousEndoff = item.endoff;
+    }
     // and apply the offset now and for all future items
     item.startoff += timeOffset;
     item.endoff += timeOffset;
+    return item;
   })
-  return data;
 }
 
 function addClip(clip) {

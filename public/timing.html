@@ -1,18 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Timing</title>
 <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/p5.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.22/addons/p5.dom.min.js"></script>
+<script src="//code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+
 <script>
+var startoff = new Date('2016 May 26 00:00:00').getTime();
+// var startoff = new Date('2016 May 18 9:17:00').getTime();
+var off = 0;
+var canvasWidth = 10000;
+var totalTime;
+$.getJSON('/get_stats', function(data) {
+  totalTime = data.total_time;
+});
+
+function updateClips() {
+  off = new Date().getTime() - startoff;
+  while (off > totalTime) {
+    off -= totalTime;
+  }
+
+  $.getJSON('/get_clips?off='+off, function(data) {
+    // console.log(off);
+    console.log(data);
+    // data.forEach(function (clip) {
+    //   console.log(clip.startoff <= off && clip.endoff >= off);
+    // })
+  })
+}
+
 var barHeight = 32;
-var days = .4; // days of footage to display
+var days = 0.3; // days of footage to display
 var timing;
 function preload() {
   timing = loadJSON('/get_timing');
 }
 function setup() {
-  createCanvas(displayWidth, barHeight * 2);
-  noLoop();
+  createCanvas(canvasWidth, barHeight * 4 + 1);
+  // noLoop();
+  setInterval(updateClips, 1000);
 }
 function draw() {
   background(255);
@@ -20,14 +48,21 @@ function draw() {
   noStroke();
   timing.forEach(function (clip) {
     var verticalOffset = 0;
-    fill(0, 0, 255);
+    stroke(0, 0, 255);
     if(clip.person == 'lauren') {
-      verticalOffset = barHeight;
-      fill(255, 0, 0);
+      verticalOffset = barHeight * 2;
+      stroke(255, 0, 0);
+    }
+    if(clip.type == 'watching') {
+      verticalOffset += barHeight;
     }
     rect(clip.startoff * scale, verticalOffset,
-      (clip.endoff - clip.startoff) * scale, barHeight);
+      (clip.duration) * scale, barHeight);
   })
+  noFill();
+  var t = off * scale;
+  stroke(0);
+  line(t, 0, t, height);
 }
 </script>
 </head>
